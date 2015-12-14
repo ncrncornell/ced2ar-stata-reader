@@ -1,0 +1,1599 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Stata 14 help for dta_117</title>
+<link rel="stylesheet" href="stata_dta_117_files/stylehelp.css" type="text/css">
+<style>
+h2 {
+font-family: Arial,Helvetica,Helv,sans-serif;
+color: #000000;
+}
+pre {
+margin: 10;
+}
+</style>
+</head>
+<body topmargin="0" leftmargin="0" bgcolor="FDF4CD" marginheight="0" marginwidth="0">
+<table background="stata_dta_117_files/filler_gradient.gif" border="0" cellpadding="5" cellspacing="0" width="100%">
+<tbody><tr><td align="left" valign="top" width="100%">
+<img src="stata_dta_117_files/logo.gif" border="0">
+</td></tr>
+</tbody></table>
+<p>
+<table align="center" bgcolor="#FFFFFF" border="1" cellpadding="5" cellspacing="0">
+<tbody><tr bgcolor="#FFFFFF"><td align="left" bgcolor="#FFFFFF" valign="top">
+<!-- END HEAD -->
+<h2>Stata 14 help for dta_117</h2>
+<pre><p>
+<b><u>Title</u></b>
+</p><p>
+    <b>[P] file formats .dta</b> -- Description of .dta file format 117
+</p><p>
+</p><p>
+    <b>Warning:</b>  The entry below describes the contents of an old Stata <b>.dta</b>
+    file format.  Newer version of Stata continue to read, and perhaps to
+    write, this old format.  What follows is the original help file for the
+    <b>.dta</b> file format when it was the current file format.
+</p><p>
+</p><p>
+<a name="description"></a><b><u>Description</u></b>
+</p><p>
+    Described below is the format of Stata <b>.dta</b> datasets.  The description is
+    highly technical and aimed at those needing to write programs in C or
+    other languages to read and write them.
+</p><p>
+    The format described here went into effect as of Stata 13.  For
+    documentation on earlier file formats, see <a href="http://www.stata.com/help.cgi?dta_115">dta_115</a>.
+</p><p>
+</p><p>
+<a name="remarks"></a><b><u>Remarks</u></b>
+</p><p>
+    The format of <b>.dta</b> files has changed over time.  Stata 13 writes what are
+    known as <b>.dta</b> format-117 files and can read all formats of files that
+    have ever been released.  The recent history of <b>.dta</b> formats is
+</p><p>
+        Format        Current as of
+        ---------------------------------------
+          117         Stata 13 
+          116         internal; never released
+          <a href="http://www.stata.com/help.cgi?dta_115">115</a>         Stata 12
+          <a href="http://www.stata.com/help.cgi?dta_114">114</a>         Stata 10
+          <a href="http://www.stata.com/help.cgi?dta_113">113</a>         Stata  8
+        ---------------------------------------
+</p><p>
+<a name="f117"></a>    Format 117 is documented below.
+</p><p>
+    Remarks are presented under the following headings:
+</p><p>
+        <a href="http://www.stata.com/help.cgi?dta_117#intro">1.  Introduction</a>
+        <a href="http://www.stata.com/help.cgi?dta_117#versions">2.  Versions and flavors of Stata</a>
+        <a href="http://www.stata.com/help.cgi?dta_117#strings">3.  Representation of strings</a>
+        <a href="http://www.stata.com/help.cgi?dta_117#numbers">4.  Representation of numbers</a>
+        <a href="http://www.stata.com/help.cgi?dta_117#definition">5.  Dataset format definition</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#header">5.1  Header</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#header_release">5.1.1  File format id</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#header_byteorder">5.1.2  Byteorder</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#header_K">5.1.3  K, # of variables</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#header_N">5.1.4  N, # of observations</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#header_label">5.1.5  Dataset label</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#header_timestamp">5.1.6  Datetime stamp</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#map">5.2  Map</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#variabletypes">5.3  Variable types</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#variablenames">5.4  Variable names</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#sortlist">5.5  Sort order of observations</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#formats">5.6  Display formats</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#labelnames">5.7  Value-label names</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#variablelabels">5.8  Variable labels</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#characteristics">5.9  Characteristics</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#data">5.10 Data</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#strls">5.11 StrLs</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#strls_vo">5.11.1 (v,o) values</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#strls_gso">5.11.2 GSOs</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#strls_advw">5.11.3 Advice on writing strLs</a>
+                 <a href="http://www.stata.com/help.cgi?dta_117#strls_advr">5.11.4 Advice on reading strLs</a>
+            <a href="http://www.stata.com/help.cgi?dta_117#value_labels">5.12 Value labels</a>
+</p><p>
+</p><p>
+<a name="intro"></a><b><u>1.  Introduction</u></b>
+</p><p>
+    Stata-format datasets record data in a way generalized to work across
+    computers that do not agree on how data are recorded.  Thus the same
+    dataset may be used, without translation, on Windows, Unix, and Mac
+    computers.  Given a computer, datasets are divided into two categories:
+    native-format and foreign-format datasets. Stata uses the following two
+    rules:
+</p><p>
+        R1.  On a given computer, Stata knows how to write native-format
+             datasets only.
+</p><p>
+        R2.  Even so, Stata can <i>read</i> all dataset formats, whether foreign or
+             native.
+</p><p>
+    Rules R1 and R2 ensure that Stata users need not be concerned with
+    dataset formats.  If you are writing a program to read and write Stata
+    datasets, you will have to determine whether you want to follow the same
+    rules or instead restrict your program to operate on only native-format
+    datasets.  Because Stata follows rules R1 and R2, such a restriction
+    would not be too limiting.  If the user had a foreign-format dataset, he
+    or she could enter Stata, <a href="http://www.stata.com/help.cgi?use"><b>use</b></a> the data, and then <a href="http://www.stata.com/help.cgi?save"><b>save</b></a> it again.
+</p><p>
+</p><p>
+<a name="versions"></a><b><u>2.  Versions and flavors of Stata</u></b>
+</p><p>
+    Stata is continually being updated, and these updates sometimes require
+    changes be made to how Stata records <b>.dta</b> datasets.  This document
+    describes what are known as <i>format-117</i> datasets, the most modern format.
+    Stata itself can read older formats, but whenever it writes a dataset, it
+    writes in 117 format.
+</p><p>
+    There are currently four flavors of Stata available:  Small Stata,
+    <a href="http://www.stata.com/help.cgi?stataic">Stata/IC</a>, <a href="http://www.stata.com/help.cgi?SpecialEdition">Stata/SE</a>, and <a href="http://www.stata.com/help.cgi?statamp">Stata/MP</a>.  The same 117 format is used by all
+    flavors.  The difference is that datasets can be larger in some flavors.
+</p><p>
+</p><p>
+<a name="strings"></a><b><u>3.  Representation of strings</u></b>
+</p><p>
+    1.  Stata has two formats for strings, known to users as <b>str</b><i>#</i> and <b>strL</b>.
+        Most strings are recorded in <b>str</b><i>#</i> format, but that is up to the user.
+        The <b>strL</b> format allows for longer strings, and it allows for both
+        binary and ASCII strings.  <b>str</b><i>#</i> strings can be ASCII only.
+</p><p>
+        By the way, StataCorp internal jargon is to refer to <b>str</b><i>#</i> strings as
+        "strfs" (pronounced <i>sturfs</i>) and to <b>strLs</b> as "strLs" (pronounced
+        <i>sturls</i>).  The <i>f</i> in strf stands for fixed allocation length, which is
+        how strfs are written in the file.
+</p><p>
+    2.  We discuss <b>strL</b> format strings in section <a href="http://www.stata.com/help.cgi?dta_117#strls">5.11</a>.
+</p><p>
+    3.  Strfs may be from 1 to 2,045 bytes long.
+</p><p>
+    4.  Strfs are recorded with a trailing binary zero (<b>\0</b>) delimiter if the
+        length of the string is less than the maximum declared length.  The
+        string is recorded without the delimiter if the string is of the
+        maximum length.
+</p><p>
+    5.  Leading and trailing blanks are significant.
+</p><p>
+    6.  Strfs use ASCII encoding.
+</p><p>
+</p><p>
+<a name="numbers"></a><b><u>4.  Representation of numbers</u></b>
+</p><p>
+    1.  Numbers are represented as 1-, 2-, and 4-byte integers and 4- and
+        8-byte floats.  In the case of floats, ANSI/IEEE Standard 754-1985
+        format is used, which in the case of the binary floating-point
+        numbers considered here is equivalent to IEEE Standard 754-2008.
+</p><p>
+    2.  Byte ordering varies across machines for all numeric types.  Bytes
+        are ordered either least significant to most significant, dubbed LSF,
+        or most significant to least significant, dubbed MSF. Intel-based
+        computers, for instance, mostly use LSF encoding.  Sun SPARC-based
+        computers use MSF encoding.  Itanium-based computers are interesting
+        in that they can be either LSF or MSF depending on the operating
+        system.  Windows and Linux on Itanium use LSF encoding.  HP-UX on
+        Itanium uses MSF encoding.
+</p><p>
+    3.  When reading an MSF number on an LSF machine or an LSF number on an
+        MSF machine, perform the following before interpreting the number:
+</p><p>
+            byte          no translation necessary
+            2-byte int    swap bytes 0 and 1
+            4-byte int    swap bytes 0 and 3, 1 and 2
+            4-byte float  swap bytes 0 and 3, 1 and 2
+            8-byte float  swap bytes 0 and 7, 1 and 6, 2 and 5, 3 and 4
+</p><p>
+    4.  For purposes of written documentation, numbers are written with the
+        most significant byte listed first.  Thus <b>0x0001</b> refers to a 2-byte
+        integer taking on the logical value 1.
+</p><p>
+    5.  Stata has five numeric data types.  They are
+</p><p>
+            <b>byte</b>          1-byte signed int
+            <b>int</b>           2-byte signed int
+            <b>long</b>          4-byte signed int
+            <b>float</b>         4-byte IEEE float
+            <b>double</b>        8-byte IEEE float
+</p><p>
+    6.  Each type allows for 27 <a href="http://www.stata.com/help.cgi?missing">missing value codes</a>, known as <b>.</b>, <b>.a</b>, <b>.b</b>, ...,
+        <b>.z</b>.  For each type, the range allowed for nonmissing values and the
+        missing value codes is
+</p><p>
+            <b>byte</b>
+                minimum nonmissing    -127   (0x80)
+                maximum nonmissing    +100   (0x64)
+                code for <b>.</b>            +101   (0x65)
+                code for <b>.a</b>           +102   (0x66)
+                code for <b>.b</b>           +103   (0x67)
+                ...
+                code for <b>.z</b>           +127   (0x7f)
+</p><p>
+            <b>int</b>
+                minimum nonmissing    -32767 (0x8000)
+                maximum nonmissing    +32740 (0x7fe4)
+                code for <b>.</b>            +32741 (0x7fe5)
+                code for <b>.a</b>           +32742 (0x7fe6)
+                code for <b>.b</b>           +32743 (0x7fe7)
+                ...
+                code for <b>.z</b>           +32767 (0x7fff)
+</p><p>
+            <b>long</b>
+                minimum nonmissing    -2,147,483,647  (0x80000000)
+                maximum nonmissing    +2,147,483,620  (0x7fffffe4)
+                code for <b>.</b>            +2,147,483,621  (0x7fffffe5)
+                code for <b>.a</b>           +2,147,483,622  (0x7fffffe6)
+                code for <b>.b</b>           +2,147,483,623  (0x7fffffe7)
+                ...
+                code for <b>.z</b>           +2,147,483,647  (0x7fffffff)
+</p><p>
+            <b>float</b>
+                minimum nonmissing    -1.701e+38  (-1.fffffeX+7e)  <i>(sic)</i>
+                maximum nonmissing    +1.701e+38  (+1.fffffeX+7e)
+                code for <b>.</b>                        (+1.000000X+7f)
+                code for <b>.a</b>                       (+1.001000X+7f)
+                code for <b>.b</b>                       (+1.002000X+7f)
+                ...
+                code for <b>.z</b>                       (+1.01a000X+7f)
+</p><p>
+            <b>double</b>
+                minimum nonmissing    -1.798e+308 (-1.fffffffffffffX+3ff)
+                maximum nonmissing    +8.988e+307 (+1.fffffffffffffX+3fe)
+                code for <b>.</b>                        (+1.0000000000000X+3ff)
+                code for <b>.a</b>                       (+1.0010000000000X+3ff)
+                code for <b>.b</b>                       (+1.0020000000000X+3ff)
+                ...
+                code for <b>.z</b>                       (+1.01a0000000000X+3ff)
+</p><p>
+        Note that for <b>float</b>, all <i>z</i>&gt;1.fffffeX+7e, and for <b>double</b>, all
+        <i>z</i>&gt;1.fffffffffffffX+3fe are considered to be missing values, and it is
+        merely a subset of the values that are labeled <b>.</b>, <b>.a</b>, <b>.b</b>, ..., <b>.z</b>.
+        For example, a value between <b>.a</b> and <b>.b</b> is still considered to be
+        missing, and in particular, all the values between <b>.a</b> and <b>.b</b> are
+        known jointly as <b>.a_</b>.  Nevertheless, the recording of those values
+        should be avoided.
+</p><p>
+        In the table above, we have used the {<b>+</b>|<b>-</b>}<b>1.</b><i>&lt;digits&gt;</i><b>X</b>{<b>+</b>|<b>-</b>}<i>&lt;digits&gt;</i>
+        notation.  The number to the left of the <b>X</b> is to be interpreted as a
+        base-16 number (the period is thus the base-16 point) and the number
+        to the right (also recorded in base 16) is to be interpreted as the
+        power of 2 <i>(sic)</i>.  For example,
+</p><p>
+            1.01aX+3ff = (1.01a) * 2^(3ff)                        (base 16)
+                       = (1 + 0/16 + 1/16^2 + 10/16^3) * 2^1023   (base 10)
+</p><p>
+        The {<b>+</b>|<b>-</b>}<b>1.</b><i>&lt;digits&gt;</i><b>X</b>{<b>+</b>|<b>-</b>}<i>&lt;digits&gt;</i> notation easily converts to IEEE
+        8-byte double:  the <b>1</b> is the hidden bit, the digits to the right of
+        the hexadecimal point are the mantissa bits, and the exponent is the
+        IEEE exponent in signed (removal of offset) form.  For instance, pi =
+        3.1415927... is
+</p><p>
+                                            8-byte IEEE, MSF
+                                         -----------------------
+            pi = +1.921fb54442d18X+001 = 40 09 21 fb 54 44 2d 18
+</p><p>
+                                       = 18 2d 44 54 fb 21 09 40
+                                         -----------------------
+                                            8-byte IEEE, LSF
+</p><p>
+        Converting {<b>+</b>|<b>-</b>}<b>1.</b><i>&lt;digits&gt;</i><b>X</b>{<b>+</b>|<b>-</b>}<i>&lt;digits&gt;</i> to IEEE 4-byte float is more
+        difficult, but the same rule applies:  the <b>1</b> is the hidden bit, the
+        digits to the right of the hexadecimal point are the mantissa bits,
+        and the exponent is the IEEE exponent in signed (removal of offset)
+        form.  What makes it more difficult is that the sign-and-exponent in
+        the IEEE 4-byte format occupy 9 bits, which is not divisible by four,
+        and so everything is shifted one bit.  In float:
+</p><p>
+                                      4-byte IEEE, MSF
+                                         -----------
+            pi = +1.921fb60000000X+001 = 40 49 0f db
+</p><p>
+                                       = db of 49 40
+                                         -----------
+                                      4-byte IEEE, LSF
+</p><p>
+        The easiest way to obtain the above result is to first convert
+        +1.921fb60000000X+001 to an 8-byte double and then convert the 8-byte
+        double to a 4-byte float.
+</p><p>
+        In any case, the relevant numbers are
+</p><p>
+            V            value                MSF              LSF
+            ---------------------------------------------------------------
+            m    -1.fffffffffffffX+3ff   ffefffffffffffff  ffffffffffffefff
+            M    +1.fffffffffffffX+3fe   7fdfffffffffffff  ffffffffffffdf7f
+            <b>.</b>    +1.0000000000000X+3ff   7fe0000000000000  000000000000e07f
+            <b>.a</b>   +1.0010000000000X+3ff   7fe0010000000000  000000000001e07f
+            <b>.b</b>   +1.0020000000000X+3ff   7fe0020000000000  000000000002e07f
+            <b>.z</b>   +1.01a0000000000X+3ff   7fe01a0000000000  00000000001ae07f
+</p><p>
+            m    -1.fffffeX+7e           feffffff          fffffffe
+            M    +1.fffffeX+7e           7effffff          ffffff7e
+            <b>.</b>    +1.000000X+7f           7f000000          0000007f
+            <b>.a</b>   +1.001000X+7f           7f000800          0008007f
+            <b>.b</b>   +1.002000X+7f           7f001000          0010007f
+            <b>.z</b>   +1.01a000X+7f           7f00d000          00d0007f
+            ---------------------------------------------------------------
+</p><p>
+</p><p>
+<a name="definition"></a><b><u>5.  Dataset format definition</u></b>
+</p><p>
+    A Stata dataset containing two variables named <b>myfloat</b> and <b>myint</b> --
+    <b>myfloat</b> a Stata 4-byte <b>float</b> and <b>myint</b> a Stata 2-byte <b>int</b> -- and having
+    one observation with <b>myfloat</b> = <b>myint</b> = 0 and written to disk on a dataset
+    written on 10 July 2013 at 2:23 p.m. would look like this:
+</p><p>
+        ---------------------------------------- <i>top of file</i> -----
+        &lt;stata_dta&gt;
+</p><p>
+            &lt;header&gt;
+                &lt;release&gt;117&lt;/release&gt;
+                &lt;byteorder&gt;MSF&lt;/byteorder&gt;
+                &lt;K&gt;<i>0002</i>&lt;/K&gt;
+                &lt;N&gt;<i>00000001</i>&lt;/N&gt;
+                &lt;label&gt;<i>00</i>&lt;/label&gt;
+                &lt;timestamp&gt;<i>11</i>10 Jul 2013 14:23&lt;/timestamp&gt;
+            &lt;/header&gt;
+</p><p>
+            &lt;map&gt;
+                <i>0000000000000000</i>
+                <i>0000000000000099</i>
+                <i>0000000000000141</i>
+                <i>0000000000000139</i>
+                <i>0000000000000190</i>
+                <i>00000000000001ab</i>
+                <i>0000000000000220</i>
+                <i>000000000000034e</i>
+                <i>0000000000000371</i>
+                <i>0000000000000384</i>
+                <i>0000000000000393</i>
+                <i>00000000000003b0</i>
+                <i>00000000000003bc</i>
+            &lt;/map&gt;
+</p><p>
+            &lt;variable_types&gt;
+            <i>fff7</i>
+            <i>fff9</i>
+            &lt;/variable_types&gt;
+</p><p>
+            &lt;varnames&gt;
+                 myfloat<i>00</i>........................
+                 myint<i>00</i>..........................
+            &lt;/varnames&gt;
+</p><p>
+            &lt;sortlist&gt;
+                <i>000000000000</i>
+            &lt;/sortlist&gt;
+</p><p>
+            &lt;formats&gt;
+                %9.0g<i>00</i>...............................
+                %8.0g<i>00</i>............................... 
+            &lt;/formats&gt;
+</p><p>
+            &lt;value_label_names&gt;
+                <i>00</i>................................
+                <i>00</i>................................
+            &lt;/value_label_names&gt;
+</p><p>
+            &lt;variable_labels&gt;
+                <i>00</i>................................................
+                <i>00</i>................................................
+            &lt;/variable_labels&gt;
+</p><p>
+            &lt;characteristics&gt;
+            &lt;/characteristics&gt;
+</p><p>
+            &lt;data&gt;
+                <i>000000000000</i>
+            &lt;/data&gt;
+</p><p>
+            &lt;strls&gt;
+            &lt;/strls&gt;
+</p><p>
+            &lt;value_labels&gt;
+            &lt;/value_labels&gt;
+</p><p>
+        &lt;/stata_dta&gt;
+        ---------------------------------------- <i>end of file</i> -----
+</p><p>
+    We have taken liberties in the spacing of the presentation.  The file is
+    actually run together, so it looks more like this,
+</p><p>
+        ---------------------------------------- <i>top of file</i> -----
+        &lt;stata_dta&gt;&lt;header&gt;&lt;release&gt;117&lt;/release&gt;&lt;byteorder&gt;MSF&lt;/by
+        teorder&gt;&lt;K&gt;<i>0002</i>&lt;/K&gt;&lt;N&gt;<i>00000001</i>&lt;/N&gt;&lt;label&gt;<i>00</i>&lt;/label&gt;&lt;timesta
+        mp&gt;<i>11</i>10 Jul 2013 14:23&lt;/timestamp&gt;&lt;/header&gt;&lt;map&gt;<i>00000000000</i>
+        <i>00000000000000000009900000000000001410000000000000139000000</i>
+        <i>000000019000000000000001ab0000000000000220000000000000034e0</i>
+        <i>00000000000037100000000000003840000000000000393000000000000</i>
+        <i>03b000000000000003bc</i>&lt;/map&gt;&lt;variable_types&gt;<i>fff7</i>&lt;/variable_ty
+        pes&gt;&lt;varnames&gt;myfloat<i>00</i>........................ myint<i>00</i>....
+        ......................&lt;/varnames&gt;&lt;sortlist&gt;<i>000000000000</i>&lt;/so
+        rtlist&gt;&lt;formats&gt;%9.0g<i>00</i>...............................%8.0g
+        <i>00</i>...............................&lt;/formats&gt;&lt;value_label_nam
+        es&gt;<i>00</i>................................<i>00</i>....................
+        .............&lt;/value_label_names&gt;&lt;variable_labels&gt;<i>00</i>.......
+        ...........................................................
+        ..............<i>00</i>...........................................
+        .....................................&lt;/variable_labels&gt;&lt;cha
+        racteristics&gt;&lt;/characteristics&gt;&lt;data&gt;<i>000000000000</i>&lt;/data&gt;&lt;st
+        rls&gt;&lt;/strls&gt;&lt;value_labels&gt;&lt;/value_labels&gt;&lt;/stata_dta&gt;
+        ---------------------------------------- <i>end of file</i> -----
+</p><p>
+    We show binary content using hexadecimal values in italics.  <i>00</i>, for
+    instance, means 1-byte binary zero.  The <i>11</i> following &lt;timestamp&gt; means
+    one byte recording hexadecimal 11, equivalent to decimal 17, and 17 is
+    the length of the datestamp that follows it: "10 Jul 2013 14:23".  We
+    show bytes that may contain random values -- that are and should be
+    ignored -- using a period.
+</p><p>
+    A 117-format <b>.dta</b> file begins with <b>&lt;stata_dta&gt;</b> and ends with
+    <b>&lt;/stata_dta&gt;</b>:
+</p><p>
+                         <b>&lt;stata_dta&gt;</b>..........<b>&lt;/stata_dta&gt;</b>
+                        /                                  \
+                 <i>start of file                        end of file</i>
+</p><p>
+    Between those markers appear
+</p><p>
+        header             <b>&lt;header&gt;</b>..............<b>&lt;/header&gt;</b>
+        file map           <b>&lt;map&gt;</b>.................<b>&lt;/map&gt;</b>
+        variable types     <b>&lt;variable_types&gt;</b>......<b>&lt;/variable_types&gt;</b>
+        variable names     <b>&lt;varnames&gt;</b>............<b>&lt;/varnames&gt;</b>
+        sort order         <b>&lt;sortlist&gt;</b>............<b>&lt;/sortlist&gt;</b>
+        variable %fmts     <b>&lt;formats&gt;</b>.............<b>&lt;/formats&gt;</b>
+        value-label names  <b>&lt;value_label_names&gt;</b>...<b>&lt;/value_label_names&gt;</b>
+        variable labels    <b>&lt;variable_labels&gt;</b>.....<b>&lt;/variable_labels&gt;</b>
+        characteristics    <b>&lt;characteristics&gt;</b>.....<b>&lt;/characteristics&gt;</b>
+        data themselves    <b>&lt;data&gt;</b>................<b>&lt;/data&gt;</b>
+        strLs              <b>&lt;strls&gt;</b>...............<b>&lt;/strls&gt;</b>
+        value labels       <b>&lt;value_labels&gt;</b>........<b>&lt;/value_labels&gt;</b>
+</p><p>
+    Each marker pair must appear even if the content is empty, and the marker
+    pairs must appear in the order shown.
+</p><p>
+</p><p>
+</p><p>
+<a name="header"></a><b><u>5.1  Header</u></b>
+</p><p>
+    The Header is defined as
+</p><p>
+        <b>&lt;header&gt;</b>...<b>&lt;/header&gt;</b>
+</p><p>
+    Between those markers appear
+</p><p>
+        file format id     <b>&lt;release&gt;</b>...<b>&lt;/release&gt;</b>
+        byteorder          <b>&lt;byteorder&gt;</b>...<b>&lt;/byteorder&gt;</b>
+        # of variables     <b>&lt;K&gt;</b>...<b>&lt;/K&gt;</b>
+        # of observations  <b>&lt;N&gt;</b>...<b>&lt;/N&gt;</b>
+        dataset label      <b>&lt;label&gt;</b>...<b>&lt;/label&gt;</b>
+        datetime stamp     <b>&lt;timestamp&gt;</b>...<b>&lt;/timestamp&gt;</b>
+</p><p>
+    Each marker must appear, and it must appear in the order shown.
+</p><p>
+</p><p>
+<a name="header_release"></a><b><u>5.1.1  File format id</u></b>
+</p><p>
+    The <i>file_format_id</i> is recorded as
+</p><p>
+              <b>&lt;release&gt;117&lt;/release&gt;</b>
+</p><p>
+</p><p>
+<a name="header_byteorder"></a><b><u>5.1.2  Byteorder</u></b>
+</p><p>
+    The <i>byteorder</i> is recorded as
+</p><p>
+              <b>&lt;byteorder&gt;</b><i>byteorder</i><b>&lt;/byteorder&gt;</b>
+</p><p>
+    where <i>byteorder</i> is either <b>MSF</b> or <b>LSF</b>.
+</p><p>
+    <b>MSF</b> stands for Most Significant byte First.  In this encoding, the number
+    1 recorded as a 2-byte integer would be <i>00</i> followed by <i>01</i>:  <i>0001</i>.
+</p><p>
+    <b>LSF</b> stands for Least Significant byte First.  In this encoding, the
+    number 1 recorded as a 2-byte integer would be <i>01</i> followed by <i>00</i>:  <i>0100</i>.
+</p><p>
+</p><p>
+<a name="header_K"></a><b><u>5.1.3  K, # of variables</u></b>
+</p><p>
+    <i>K</i>, the number of variables stored in the dataset, is recorded as
+</p><p>
+              <b>&lt;K&gt;</b><i>bb</i><b>&lt;/K&gt;</b>
+</p><p>
+    where <i>K</i> = <i>bb</i> is a 2-byte unsigned integer field recorded according to
+    <i>byteorder</i>.
+</p><p>
+</p><p>
+<a name="header_N"></a><b><u>5.1.4  N, # of observations</u></b>
+</p><p>
+    <i>N</i>, the number of observations stored in the dataset, is recorded as
+</p><p>
+              <b>&lt;N&gt;</b><i>bbbb</i><b>&lt;/N&gt;</b>
+</p><p>
+    Where <i>N</i> = <i>bbbb</i> is a 4-byte unsigned integer field recorded according to
+    <i>byteorder</i>.
+</p><p>
+</p><p>
+</p><p>
+<a name="header_label"></a><b><u>5.1.5  Dataset label</u></b>
+</p><p>
+    The dataset label is recorded as
+</p><p>
+              <b>&lt;label&gt;</b><i>lccccc........c</i><b>&lt;/label&gt;</b>
+                      |------------|
+                       <i>l characters</i>
+</p><p>
+    First recorded is the length <i>l</i> of the dataset label, excluding a
+    terminating binary 0.  <i>l</i> is a 1-byte unsigned integer field required to
+    be 0 &lt;= <i>l</i> &lt;= decimal 80 (hexadecimal 50).  The <i>l</i> ASCII characters appear
+    after that.
+</p><p>
+</p><p>
+<a name="header_timestamp"></a><b><u>5.1.6  Datetime stamp</u></b>
+</p><p>
+    The datetime stamp records the date and time the file was written.  The
+    datetime stamp is recorded as
+</p><p>
+              <b>&lt;timestamp&gt;</b><i>lccccc........c</i><b>&lt;/timestamp&gt;</b>
+                          |------------|
+                           <i>l characters</i>
+</p><p>
+    First recorded is the length <i>l</i> of the datetime stamp, excluding the
+    terminating binary 0, if any.  <i>l</i> is a 1-byte unsigned integer field.  The
+    <i>l</i> ASCII characters appear after that.
+</p><p>
+    <i>l</i> is required to be 0 or decimal 17.  If <i>l</i>==0, then no datetime stamp is
+    recorded.  If <i>l</i>==(decimal) 17, the datetime stamp is recorded in the
+    format
+</p><p>
+                 ----+----1----+--
+                 <i>dd Mon yyyy hh</i><b>:</b><i>mm</i>
+    such as
+                 10 Jul 2013 14:23
+</p><p>
+    If <i>dd</i>&lt;10 or <i>hh</i>&lt;10, the element is recorded with a leading blank or a
+    leading zero:
+</p><p>
+                 04 Jul 2032 04:23
+                  4 Jul 2013  4:23
+</p><p>
+<a name="map"></a><b><u>5.2  Map</u></b>
+</p><p>
+    The map has to do with the position in the file, not the Stata data
+    themselves.  The map is recorded as
+</p><p>
+              <b>&lt;map&gt;</b><i>filepositions</i><b>&lt;/map&gt;</b>
+</p><p>
+    where <i>filepositions</i> is a list (vector) of 14 8-byte offsets from the
+    start of the file, written according to <i>byteorder</i>.  The 14 positions to
+    be recorded are
+</p><p>
+                 #        file position of the start of the
+                -----------------------------------------------
+                 1.       <b>&lt;stata_data&gt;</b>, definitionally 0
+                 2.       <b>&lt;map&gt;</b>
+                 3.       <b>&lt;variable_types&gt;</b>
+                 4.       <b>&lt;varnames&gt;</b>
+                 5.       <b>&lt;sortlist&gt;</b>
+                 6.       <b>&lt;formats&gt;</b>
+                 7.       <b>&lt;value_label_names&gt;</b>
+                 8.       <b>&lt;variable_labels&gt;</b>
+                 9.       <b>&lt;characteristics&gt;</b>
+                10.       <b>&lt;data&gt;</b>
+                11.       <b>&lt;strls&gt;</b>
+                12.       <b>&lt;value_labels&gt;</b>
+                13.       <b>&lt;/stata_data&gt;</b>
+                14.       <i>end-of-file</i>
+                -----------------------------------------------
+</p><p>
+    Notes:
+</p><p>
+        1.  File positions are values that can be obtained from and set by C
+            function <b>lseek()</b>.  File positions are obtained by <b>lseek(fd, 0,</b>
+            <b>SEEK_CUR)</b> just before writing the marker listed above or, in the
+            case of <i>end-of-file</i>, just after writing <b>&lt;/stata_data&gt;</b>.
+</p><p>
+        2.  If you are writing a file, we recommend writing <b>&lt;map&gt;</b>...<b>&lt;/map&gt;</b>
+            with all file positions filled in with zero as you are proceeding
+            sequentially and tracking the file positions in a structure such
+            as
+</p><p>
+                <b>struct mapdef {</b>
+                        <b>off_t  hdr ;</b>
+                        <b>off_t  map ;  </b>
+                        <b>off_t  types ; </b>
+                        <b>off_t  varnames ;</b>
+                        <b>off_t  srtlist ;</b>
+                        <b>off_t  fmts ;</b>
+                        <b>off_t  vlblnames ;</b>
+                        <b>off_t  varlabs ;</b>
+                        <b>off_t  chars ;</b>
+                        <b>off_t  data ;</b>
+                        <b>off_t  strls ; </b>
+                        <b>off_t  vallabs ;</b>
+                        <b>off_t  tlr ;</b>
+                        <b>off_t  bot ;</b>
+                <b>} ;</b>
+</p><p>
+            Record file positions in the structure just before writing the
+            corresponding marker.  Once you have written <b>&lt;/stata_data&gt;</b>, seek
+            to <b>map+5</b> and rewrite the file positions.  Then <b>close()</b> the file.
+</p><p>
+        3.  Note that file positions are 8 bytes long, as they would be on a
+            64-bit computer.  If you are on a 32-bit computer, you must set
+            the most-significant 4 bytes to 0 and record your 32-bit file
+            positions in the least-significant 4 bytes.  If you are on a <b>MSF</b>
+            computer, you write each file position by first writing 4 bytes
+            of 0 and then the 4-byte file position.  If you are on a <b>LSF</b>
+            computer, you write each file position by writing the 4-byte file
+            position and then writing 4 bytes of 0.
+</p><p>
+</p><p>
+<a name="variabletypes"></a><b><u>5.3  Variable types</u></b>
+</p><p>
+    Variable types are recorded as
+</p><p>
+              <b>&lt;variable_types&gt;</b><i>typlist</i><b>&lt;/variable_types&gt;</b>
+</p><p>
+    where <i>typlist</i> is a sequence (vector) of <i>K</i> 2-byte unsigned integer fields
+    written according to <i>byteorder</i> and recording the variable type of
+    variable 1, 2, ..., <i>K</i>.
+</p><p>
+    The types are encoded
+</p><p>
+                         Stata 
+           typ          meaning      Description
+        ----------------------------------------------------------
+             1          str1         1 character strf
+             2          str2         2 or fewer characters strf
+           ...          etc.
+          2045          str2045      2,045 or fewer character strf
+</p><p>
+         32768          strL         strL of any length 
+</p><p>
+         65526          double       8-byte float
+         65527          float        4-byte float
+         65528          long         4-byte signed integer
+         65529          int          2-byte signed integer
+         65530          byte         1-byte signed integer
+        ----------------------------------------------------------
+</p><p>
+</p><p>
+<a name="variablenames"></a><b><u>5.4  Variable names</u></b>
+</p><p>
+    Variable names are recorded as
+</p><p>
+              <b>&lt;varnames&gt;</b><i>varnamelist</i><b>&lt;/varnames&gt;</b>
+</p><p>
+    where <i>varnamelist</i> is a sequence (vector) of <i>K</i> 33-character, binary-zero
+    terminated, ASCII variable names.
+</p><p>
+    <i>varnamelist</i> contains the names of the Stata variables 1, ..., <i>K</i>, each up
+    to 32 characters in length and each terminated by a binary zero (\0).
+    For instance, if <i>K</i>==4, <i>varnamelist</i> would be
+</p><p>
+        0       33        66          99
+        |        |         |           |
+        <b>vbl1\0...myvar\0...thisvar\0...lstvar\0...</b>
+</p><p>
+</p><p>
+    The above states that variable 1 is named <b>vbl1</b>, variable 2 <b>myvar</b>,
+    variable 3 <b>thisvar</b>, and variable 4 <b>lstvar</b>.  The byte positions indicated
+    by periods will contain random values (and note that we have omitted some
+    of the periods).  If <i>varnamelist</i> is read into the C-array <b>char</b>
+    <b>varnamelist[]</b>, then <b>&amp;varnamelist[(i-1)*33]</b> points to the name of the <b>i</b>th
+    variable, 1 &lt;= <b>i</b> &lt;= <i>K</i>.
+</p><p>
+</p><p>
+<a name="sortlist"></a><b><u>5.5  Sort order of observations</u></b>
+</p><p>
+    The sort order in which the observations will be subsequently recorded is
+    recorded as
+</p><p>
+              <b>&lt;sortlist&gt;</b><i>sortlist</i><b>&lt;/sortlist&gt;</b>
+</p><p>
+    where <i>sortlist</i> is a sequence (array) of <i>K</i>+1 unsigned 2-byte integers
+    recorded according to <i>byteorder</i>.
+</p><p>
+    <i>sortlist</i> specifies the sort-order of the dataset and is terminated by a
+    2-byte zero (<i>0000</i> in hex).  Each 2-byte element contains either a
+    variable number or zero.  The zero marks the end of the <i>sortlist</i>, and the
+    recorded positions after that contain random junk.  For instance, if the
+    data are not sorted, the first 2-byte integer will contain a zero, and
+    the 2-byte integers thereafter will contain junk.  If <b>nvar</b>==4, the record
+    will appear as
+</p><p>
+        <b>0000................</b>
+</p><p>
+    If the dataset is sorted by one variable, say <b>myvar</b>, and if that variable
+    is the second variable in the <i>varnamelist</i>, the record will appear as
+</p><p>
+        <b>00020000............</b>  (if <b>byteorder</b>==MSF)
+        <b>02000000............</b>  (if <b>byteorder</b>==LSF)
+</p><p>
+    If the dataset is sorted by <b>myvar</b> and within <b>myvar</b> by <b>vbl1</b>, and if <b>vbl1</b>
+    is the first variable in the dataset, the record will appear as
+</p><p>
+        <b>000200010000........</b>  (if <b>byteorder</b>==MSF)
+        <b>020001000000........</b>  (if <b>byteorder</b>==LSF)
+</p><p>
+</p><p>
+    If <i>sortlist</i> were read into the C-array <b>short</b> <b>int</b> <b>srtlist[]</b>, then
+    <b>srtlist[0]</b> would be the variable number of the first sort variable or, if
+    the data were not sorted, 0.  If the number is not 0, <b>srtlist[1]</b> would be
+    the variable number of the second sort variable or, if there is not a
+    second sort variable, 0, and so on.
+</p><p>
+</p><p>
+<a name="formats"></a><b><u>5.6  Display formats</u></b>
+</p><p>
+    The display formats associated with each variable are recorded as
+</p><p>
+              <b>&lt;formats&gt;</b><i>fmtlist</i><b>&lt;/formats&gt;</b>
+</p><p>
+    <i>fmtlist</i> contains the formats of the variables 1, ..., <i>K</i>.  Each format is
+    49 bytes long and includes a binary-zero end-of-string marker.  For
+    instance,
+</p><p>
+        <b>%9.0f\0..........................................%8.2f\0......</b>
+        <b>....................................%20.0g\0..................</b>
+        <b>.......................%td\0..................................</b>
+        <b>..........%tcDDmonCCYY_HH:MM:SS.sss\0......................</b>
+</p><p>
+    indicates that variable 1 has a <b>%9.0f</b> format, variable 2 a <b>%8.2f</b> format,
+    variable 3 a <b>%20.0g</b> format, and so on.  Note that these are Stata
+    formats, not C formats.
+</p><p>
+        1.  Formats beginning with <b>%t</b> or <b>%-t</b> are Stata's date and time
+            formats.
+</p><p>
+        2.  Stata has an old <b>%d</b> format notation, and some datasets still have
+            them.  Format <b>%d</b>... is equivalent to modern format <b>%td</b>... and
+            <b>%-d</b>... is equivalent to <b>%-td</b>...
+</p><p>
+        3.  Nondate formats ending in <b>gc</b> or <b>fc</b> are similar to C's <b>g</b> and <b>f</b>
+            formats, but with commas.  Most translation routines would ignore
+            the ending <b>c</b> (change it to <b>\0</b>).
+</p><p>
+        4.  Formats may contain commas rather than periods, such as <b>%9,2f</b>,
+            indicating European format.
+</p><p>
+    If <i>fmtlist</i> is read into the C-array <b>char</b> <b>fmtlist[]</b>, then
+    <b>&amp;fmtlist[49*(i-1)]</b> refers to the starting address of the format for the
+    <b>i</b>th variable.
+</p><p>
+</p><p>
+<a name="labelnames"></a><b><u>5.7  Value-label names</u></b>
+</p><p>
+    The value-label names associated with each variable are recorded as
+</p><p>
+              <b>&lt;value_label_names&gt;</b><i>lbllist</i><b>&lt;/value_label_names&gt;</b>
+</p><p>
+    where <i>lbllist</i> is a sequence (array) of <i>K</i> 33-character, binary-zero
+    terminated strings.
+</p><p>
+    <i>lbllist</i> contains the names of the value formats associated with the
+    variables 1, ..., <i>K</i>.  Each value-format name is 33 bytes long and
+    includes a binary-zero end-of-string marker.  For instance,
+</p><p>
+        0   33        66   99
+        |    |         |    |
+        <b>\0...yesno\0...\0...yesno\0...</b>
+</p><p>
+    indicates that variables 1 and 3 have no value label associated with
+    them, whereas variables 2 and 4 are both associated with the value label
+    named <b>yesno</b>.  If <i>lbllist</i> is read into the C-array <b>char</b> <b>lbllist[]</b>, then
+    <b>&amp;lbllist[33*(i-1)]</b> points to the start of the label name associated with
+    the <b>i</b>th variable.
+</p><p>
+</p><p>
+<a name="variablelabels"></a><b><u>5.8  Variable labels</u></b>
+</p><p>
+    The variable labels associated with each variable are recorded as
+</p><p>
+              <b>&lt;variable_labels&gt;</b><i>varlbllist</i><b>&lt;/variable_labels&gt;</b>
+</p><p>
+    where <i>varlbllist</i> is a sequence (array) of <i>K</i> 81-character, binary-zero
+    terminated strings.  If a variable has no label, the first character of
+    its label is \0.
+</p><p>
+</p><p>
+<a name="characteristics"></a><b><u>5.9  Characteristics</u></b>
+</p><p>
+    Characteristics are used to record information that is unique to Stata
+    and has no equivalent in other data management packages.  When writing
+    data, we recommend you write
+</p><p>
+              <b>&lt;characteristics&gt;&lt;/characteristics&gt;</b>
+</p><p>
+    That leaves the problem of reading a dataset that might contain
+    characteristics.  Characteristics are recorded as
+</p><p>
+             <b>&lt;characteristics&gt;</b>...<b>&lt;/characteristics&gt;</b>
+</p><p>
+    We recommend you skip over the <i>...</i> part.  Do not, however, merely scan
+    ahead until you encounter the close marker, because the ... part itself
+    might contain a characteristic containing the string
+    "<b>&lt;/characteristics&gt;</b>".
+</p><p>
+    The ... part contains zero or more individual characteristics, each
+    appearing as
+</p><p>
+             <b>&lt;ch&gt;</b><i>llll</i>...............<b>&lt;/ch&gt;</b>
+                     |-------------|
+                         <i>llll</i> bytes
+</p><p>
+    where <i>llll</i> is the length of what follows, recorded as a 4-byte unsigned
+    integer field to be interpreted according to <i>byteorder</i>.  Thus, to skip an
+    individual characteristic after reading <b>&lt;ch&gt;</b>, read <i>llll</i> and then skip
+    <i>llll</i> bytes in the file.  Then verify that you next read <b>/ch</b>.  The marker
+    after that will then be either <b>&lt;/characteristics&gt;</b>, meaning you are done,
+    or <b>&lt;ch&gt;</b>, meaning you have yet another individual characteristic to skip.
+</p><p>
+    For those who want to read and write characteristics, the ... part
+    contains the information on the individual characteristic being defined,
+    recorded as
+</p><p>
+             0            33               66       <i>l</i>-1
+             |             |                |        |
+             <i>varname</i><b>\0.....</b><i>charname</i><b>\0</b>.......<i>contents</i><b>\0</b>
+             |---------------------------------------|
+                            <i>llll</i> bytes
+</p><p>
+    Bytes 0-32 contain a binary-zero terminated variable name, bytes 33-65
+    contain a binary-zero terminated characteristic name, and bytes 60
+    through the end of the record contain the binary-zero terminated ASCII
+    contents of characteristic <i>varname</i><b>[</b><i>charname</i><b>]</b>.
+</p><p>
+</p><p>
+<a name="data"></a><b><u>5.10  Data</u></b>
+</p><p>
+    The data are recorded as
+</p><p>
+              <b>&lt;data&gt;</b><i>data</i><b>&lt;/data&gt;</b>
+</p><p>
+    where <i>data</i> is observation 1 followed by observation 2 followed by ...
+    followed by observation <i>N</i>,
+</p><p>
+              <b>&lt;data&gt;</b><i>obs1obs2obs3...obsN</i><b>&lt;/data&gt;</b>
+</p><p>
+    and where each observation is variable 1's value followed by variable 2's
+    value ... followed by variable <i>K</i>'s value,
+</p><p>
+              <b>&lt;data&gt;</b><i>v11v12...v1Kv21v22...v2K......vN1vN2...VNK</i><b>&lt;/data&gt;</b>
+</p><p>
+    Each <i>vIJ</i> is recorded in its own internal format, as given by <i>typlist</i> and
+    defined in sections <a href="http://www.stata.com/help.cgi?dta_117#strings">3</a> (strfs) and <a href="http://www.stata.com/help.cgi?dta_117#numbers">4</a> (numeric values).  We have not yet
+    explained how strLs are written; we will do that in section <a href="http://www.stata.com/help.cgi?dta_117#strls">5.11</a>.  In the
+    meantime, let us imagine a dataset without strLs.
+</p><p>
+    All values are written per <i>byteorder</i>.  Strfs are binary-zero terminated
+    if they are shorter than the allowed space, but they are not terminated
+    if they are full width.
+</p><p>
+    For instance, consider a dataset in which <i>V1</i> is a <b>float</b>, <i>V2</i> a <b>byte</b>, <i>V3</i> a
+    <b>double</b>, and <i>V4</i> a <b>str6</b>:
+</p><p>
+</p><p>
+        . <b>describe</b>
+</p><p>
+        Contains data
+          obs:             2                          
+         vars:             4                          
+         size:            38                          
+        ----------------------------------------------------------------
+                      storage  display     value
+        variable name   type   format      label      variable label
+        ----------------------------------------------------------------
+        V1              float  %9.0g                  
+        V2              byte   %8.0g                  
+        V3              double %10.0g                 
+        V4              str6   %9s                    
+        ----------------------------------------------------------------
+        Sorted by:  
+</p><p>
+        . list
+</p><p>
+             +-----------------------+
+             | V1   V2   V3       V4 |
+             |-----------------------|
+          1. |  0    1    2    first |
+          2. |  1    2    3   second |
+             +-----------------------+
+</p><p>
+    The corresponding <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b> would read (assuming MSF byteorder),
+</p><p>
+        &lt;data&gt;<i>00000000014000000000000000</i>first<i>003f800000024008000000000000</i>
+        second&lt;/data&gt;
+</p><p>
+    Values for variables and observations are run together, but we can more
+    easily understand it if we add nonsignificant white space
+</p><p>
+        &lt;data&gt;
+                 <i>00000000 01 4000000000000000</i> first<i>00</i>
+                 <i>3f800000 02 4008000000000000</i> second
+        &lt;/data&gt;
+                
+        1.  Each variable's value is written according to its variable type.
+</p><p>
+            <b>V1</b>'s value is 4 bytes (8 hexadecimal digits) long because <b>V1</b> is
+            of type <b>float</b>.  What is written is interpreted as a 4-byte IEEE
+            float.
+</p><p>
+            <b>V2</b>'s value is 1 byte (2 hexadecimal digits) long because <b>V2</b> is of
+            type <b>byte</b>.  What is written is interpreted as 1-byte signed
+            integer.
+</p><p>
+            <b>V3</b>'s value is 8 bytes (16 hexadecimal digits) long because <b>V3</b> is
+            of type <b>double</b>.  What is written is interpreted as 8-byte IEEE
+            float.
+</p><p>
+        2.  Look carefully at <b>V4</b>, a <b>str6</b> taking on values "first" and
+            "second".  The value "first" is written as first\0 -- with
+            trailing binary 0.  The value "second" is written without a
+            trailing binary 0 because "second" is 6 characters long, which is
+            to say, full length.  If another observation contained "dog", it
+            would be written dog\0.. -- a binary 0 would be written, and then
+            two random bytes written so that the length of what was written
+            would be the required 6.
+</p><p>
+            The general rule is that <b>str#</b> is written in a field of # bytes.
+            If the value is # bytes long, no binary 0 is suffixed.  If the
+            value is less than # bytes long, a binary 0 is suffixed at the
+            end of the string.
+</p><p>
+            An empty string is always written as \0 and then padded with
+            random bytes if necessary to fill out the required length.
+</p><p>
+</p><p>
+<a name="strls"></a><b><u>5.11  StrLs</u></b>
+</p><p>
+    StrLs are long strings.  In the above section on <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>, we saw
+    that the value of each strf -- Stata types <b>str1</b>, <b>str2</b>, ..., <b>str2045</b> -- is
+    recorded as fixed-length strings.
+</p><p>
+    StrLs can be up to 2,000,000,000 characters long, so they are recorded
+    differently.
+</p><p>
+    If there are no strL variables in the data, <b>&lt;strls&gt;</b>...<b>&lt;/strls&gt;</b> is
+    recorded as
+</p><p>
+                <b>&lt;strls&gt;&lt;/strls&gt;</b>
+</p><p>
+    In section <a href="http://www.stata.com/help.cgi?dta_117#data">5.10</a> we had an example showing the contents of
+    <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b> for a dataset containing four variables and two
+    observations.  There were no strLs in that example, and thus the entire
+    <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b> and <b>&lt;strls&gt;</b>...<b>&lt;/strls&gt;</b> would read
+</p><p>
+        &lt;data&gt;<i>00000000014000000000000000</i>first<i>003f800000024008000000000000</i>
+        second&lt;/data&gt;&lt;strl&gt;&lt;strls&gt;
+</p><p>
+    or, with more readable, nonsignificant spaces,
+</p><p>
+        &lt;data&gt;
+                 <i>00000000 01 4000000000000000</i> first<i>00</i>
+                 <i>3f800000 02 4008000000000000</i> second
+        &lt;/data&gt;
+        &lt;strls&gt;
+        &lt;/strls&gt;
+</p><p>
+    Let's take that example's dataset and add a strL variable to it as
+    variable <b>V5</b>:
+</p><p>
+        . <b>describe</b>
+</p><p>
+        Contains data
+          obs:             2                          
+         vars:             5                          
+         size:            38                          
+        ----------------------------------------------------------------
+                      storage  display     value
+        variable name   type   format      label      variable label
+        ----------------------------------------------------------------
+        V1              float  %9.0g                  
+        V2              byte   %8.0g                  
+        V3              double %10.0g                 
+        V4              str6   %9s                    
+        V5              strL   %9s                    
+        ----------------------------------------------------------------
+        Sorted by:  
+</p><p>
+</p><p>
+        . <b>list</b>
+             +--------------------------------+
+             | V1   V2   V3       V4       V5 |
+             |--------------------------------|
+          1. |  0    1    2    first    third |
+          2. |  1    2    3   second   fourth |
+             +--------------------------------+
+</p><p>
+    The data for the strL variable are divided between <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b> and
+    <b>&lt;strls&gt;</b>...<b>&lt;/strls&gt;</b>.  Run together in the <b>.dta</b> file, it looks like this,
+</p><p>
+        &lt;data&gt;<i>00000000014000000000000000</i>first<i>000000000500000001</i>
+        <i>3f800000024008000000000000</i>second<i>0000000500000002</i>&lt;/data&gt;
+        &lt;strls&gt;GSO<i>00000005000000018200000006</i>third<i>00</i>GSO<i>000000050</i>
+        <i>0000002 82 00000007</i>fourth<i>00</i>&lt;/strls&gt;
+</p><p>
+    or, with more readable, nonsignificant spaces,
+</p><p>
+        &lt;data&gt;
+                 <i>00000000 01 4000000000000000</i> first<i>00</i> <i>0000000500000001</i>
+                 <i>3f800000 02 4008000000000000</i> second  <i>0000000500000002</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+                 GSO <i>0000000500000001 82 00000006</i>third<i>00</i>
+                 GSO <i>0000000500000002 82 00000007</i>fourth<i>00</i>
+        &lt;/strls&gt;
+</p><p>
+    StrLs are recorded in two parts:
+</p><p>
+        1.  In <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>, each strL is recorded as an 8-byte (16 hex
+            digit) value. These values are to be interpreted as 2 4-byte
+            fields and are known as (<i>v</i>,<i>o</i>) values.
+</p><p>
+            In the first observation, the strL is recorded as (hexadecimal)
+            <i>0000000500000001</i>, which is the 2 4-byte values, namely,
+            (hexadecimal) <i>00000005</i> and <i>00000001</i>, and which corresponds to
+            (<i>v</i>,<i>o</i>) = (5,1).
+</p><p>
+            In the second observation, the (<i>v</i>,<i>o</i>) value is (5,2).
+</p><p>
+        2.  <b>&lt;strls&gt;</b>...<b>&lt;/strls&gt;</b> records the mapping of (<i>v</i>,<i>o</i>) values to
+            corresponding strings.  In the case of strLs, strings are known
+            as Generic String Objects (GSOs).
+</p><p>
+            In this example, two GSOs are defined.  The first is the GSO for
+            (<i>v</i>,<i>o</i>)=(5,1) and the second, the GSO for (5,2).
+</p><p>
+            (<i>v</i>,<i>o</i>)=(5,1) corresponds to "third".
+</p><p>
+            (<i>v</i>,<i>o</i>)=(5,2) correspond to "fourth".
+</p><p>
+    Obviously, there is more information recorded in the GSO than just the
+    (<i>v</i>,<i>o</i>) value and its corresponding string, and we will get to that, but
+    let's focus first on the (<i>v</i>,<i>o</i>) values.
+</p><p>
+</p><p>
+<a name="strls_vo"></a><b><u>5.11.1  (v,o) values</u></b>
+</p><p>
+    If our dataset contained variable V5 equaling "third" in both
+    observations,
+</p><p>
+</p><p>
+        . <b>list</b>
+             +--------------------------------+
+             | V1   V2   V3       V4       V5 |
+             |--------------------------------|
+          1. |  0    1    2    first    third |
+          2. |  1    2    3   second    third |
+             +--------------------------------+
+</p><p>
+</p><p>
+    they could be recorded like this,
+</p><p>
+        &lt;data&gt;
+                 00000000 01 4000000000000000 first<i>00</i> <i>0000000500000001</i>
+                 3f800000 02 4008000000000000 second  <i>0000000500000002</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+                 GSO <i>0000000500000001 82 00000006</i>third<i>00</i>
+                 GSO <i>0000000500000002 82 00000006</i>third<i>00</i>
+        &lt;/strls&gt;
+</p><p>
+    or like this:
+</p><p>
+        &lt;data&gt;
+                 00000000 01 4000000000000000 first<i>00</i> <i>0000000500000001</i>
+                 3f800000 02 4008000000000000 second  <i>0000000500000001</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+                 GSO <i>0000000500000001 82 00000006</i>third<i>00</i>
+        &lt;/strls&gt;
+</p><p>
+    Note that there is only one GSO and both observations refer to it by
+    specifying (<i>v</i>,<i>o</i>) as (5,1) in both observations.  This is called a shared
+    or cross-linked GSO.  Lots of observations can link to the same GSO.  By
+    the way, the data could not be recorded like this:
+</p><p>
+        &lt;data&gt;
+                 00000000 01 4000000000000000 first<i>00</i> <i>0000000500000002</i>
+                 3f800000 02 4008000000000000 second  <i>0000000500000002</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+                 GSO <i>0000000500000002 82 00000006</i>third<i>00</i>
+        &lt;/strls&gt;
+</p><p>
+    In this example of a mistake, (<i>v</i>,<i>o</i>) is (5,2) rather than (5,1).  This is
+    called a forward reference and is not allowed.  You might already suspect
+    that (<i>v</i>,<i>o)</i> values are called that because they somehow refer to variable
+    and observation numbers.  In <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>, (<i>v</i>,<i>o</i>) values for variable
+    <i>i</i>, observation <i>j</i> are required to equal <i>i</i>,<i>j</i> or be "before" <i>i</i>,<i>j</i>, which is
+    to say, <i>o</i>&lt;<i>j</i> or, if <i>o</i>==<i>j</i>, <i>v</i>&lt;=<i>i</i>.
+</p><p>
+    (0,0) is a special (<i>v</i>,<i>o</i>) value that refers to a GSO containing (ascii) ""
+    and that you do not need to define (and that you may not define).  If
+    variable V5 in the first observation contained (ascii) "",
+</p><p>
+        . <b>list</b>
+             +--------------------------------+
+             | V1   V2   V3       V4       V5 |
+             |--------------------------------|
+          1. |  0    1    2    first          |
+          2. |  1    2    3   second   fourth |
+             +--------------------------------+
+</p><p>
+    the data could be recorded as
+</p><p>
+</p><p>
+        &lt;data&gt;
+                 00000000 01 4000000000000000 first<i>00</i> <i>0000000500000001</i>
+                 3f800000 02 4008000000000000 second  <i>0000000500000002</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+                 GSO <i>0000000500000001 82 0000000100</i>
+                 GSO <i>0000000500000002 82 00000007</i>fourth<i>00</i>
+        &lt;/strls&gt;
+</p><p>
+    but that is considered bad style because it causes Stata to waste a
+    little memory.  The right way to record the data is
+</p><p>
+        &lt;data&gt;
+                 00000000 01 4000000000000000 first<i>00</i> <i>0000000000000000</i>
+                 3f800000 02 4008000000000000 second  <i>0000000500000002</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+                 GSO <i>0000000500000002 82 00000007</i>fourth<i>00</i>
+        &lt;/strls&gt;
+</p><p>
+    In the above, note that (<i>v</i>,<i>o</i>) = (0,0) in the first observation.  By the
+    way, if both observations of variable V5 contained (ascii) "", the data
+    would be recorded as
+</p><p>
+        &lt;data&gt;
+                 00000000 01 4000000000000000 first<i>00</i> <i>0000000000000000</i>
+                 3f800000 02 4008000000000000 second  <i>0000000000000000</i>
+        &lt;/data&gt;
+        &lt;strls&gt;
+        &lt;/strls&gt;
+</p><p>
+<a name="vo_rules"></a>    The rules for specifying (<i>v</i>,<i>o</i>) values are the following:
+</p><p>
+        1.  In <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>, strLs are recorded as (<i>v</i>,<i>o</i>) values.  That
+            means a (<i>v</i>,<i>o</i>) value is specified for each strL variable in each
+            observation.
+</p><p>
+        2.  (<i>v</i>,<i>o</i>) values are recorded in an 8-byte field and are interpreted
+            as 2 4-byte unsigned integer values per <i>byteorder</i>.
+</p><p>
+        3.  For variable <i>i</i>, observation <i>j</i>, (<i>v</i>,<i>o</i>) = (0,0) if <i>i</i>,<i>j</i> contains
+            (ascii) "".
+</p><p>
+        4.  For variable <i>i</i>, observation <i>j</i>, if (<i>v</i>,<i>o</i>) != (0,0), then <i>o</i>&lt;<i>j</i> or, if
+            <i>o</i>==<i>j</i>, <i>v</i>&lt;=<i>i</i>.  That is, variable <i>i</i>, observation <i>j</i> either links to
+            its own (<i>v</i>,<i>o</i>) = (<i>i</i>,<i>j</i>) or links to the (<i>v</i>,<i>o</i>) value of a variable
+            and observation that appeared before it in <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>.
+</p><p>
+        5.  The usual case is (<i>v</i>,<i>o</i>) = (<i>i</i>,<i>j</i>).
+</p><p>
+        6.  Programs that write <b>.dta</b> files are not required to produce
+            crosslinked (<i>v</i>,<i>o</i>) values when contents of strings are equal.
+</p><p>
+        7.  Programs that read <b>.dta</b> files are required to be able to process
+            crosslinked (<i>v</i>,<i>o</i>) values.
+</p><p>
+</p><p>
+<a name="strls_gso"></a><b><u>5.11.2  GSOs</u></b>
+</p><p>
+    The markers <b>&lt;strls&gt;</b>....<b>&lt;/strls&gt;</b> contain the definitions of zero or more
+    GSOs:
+</p><p>
+                <b>&lt;strls&gt;</b><i>GSOdefGSOdef</i>...<i>GSOdef</i><b>&lt;/strls&gt;</b>
+</p><p>
+    Each GSO can contain either an ascii or a binary string.  We use the
+    following definitions:
+</p><p>
+            A string is <i>ascii-like</i> if it contains no binary zeros and
+            if it contains a binary zero following its last significant
+            character.
+</p><p>
+            A string is <i>ascii</i> if it is ascii-like and it uses the ASCII
+            character encoding
+</p><p>
+            A string that is not ascii is <i>binary</i>.
+</p><p>
+    The format of a GSO record is
+</p><p>
+                     o           len
+                      \         /        contents
+                       ---- ----         /
+                <b>GSO</b>vvvvooootllllxxxxxxxxxxxxxxx...x
+                   ----    -   (---- len bytes ----)
+                  /        |
+                 v       type
+</p><p>
+</p><p>
+            name    length          contents
+            -----------------------------------------------------------
+                         3          <b>GSO</b> (fixed string)
+            <i>v</i>            4          unsigned 4-byte integer, <i>v</i> of (<i>v</i>,<i>o</i>)
+            <i>o</i>            4          unsigned 4-byte integer, <i>o</i> of (<i>v</i>,<i>o</i>)
+            <i>t</i>            1          unsigned 1-byte integer
+            <i>len</i>          4          unsigned 4-byte integer
+            <i>contents   len</i>          contents of strL
+            -----------------------------------------------------------
+            <i>v</i>, <i>o</i>, and <i>len</i> are recorded per <i>byteorder</i>.
+</p><p>
+            <i>t</i> is encoded:
+                129 (decimal)        binary
+                130 (decimal)        ascii
+            if <i>t</i>==129,
+                <i>contents</i> contains the string AS-IS.
+                <i>len</i> contains the length of <i>contents</i>.
+            if <i>t</i>==130, 
+                <i>contents</i> must contain trailing \0.
+                <i>len</i> contains the length of the string including \0.
+                If using C, <i>len</i> = strlen(string) + 1.
+           
+</p><p>
+    Notes:
+</p><p>
+        1.  <i>v</i> and <i>o</i> are the (<i>v</i>,<i>o</i>) values defined in <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>.  <i>v</i> and
+            <i>o</i> must follow the <a href="http://www.stata.com/help.cgi?dta_117#vo_rules">rules</a> of specification previously given.
+</p><p>
+        2.  Variable <i>v</i> must be of type <b>strL</b>.
+</p><p>
+        3.  GSOs must appear in "ascending" order of (<i>v</i>,<i>o</i>).  Ascending order
+            is defined as the same order as they appeared in
+            <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b>: ascending <i>v</i> for <i>o</i>==1, followed by ascending <i>v</i>
+            for <i>o</i>==2, ....
+</p><p>
+        4.  All (<i>v</i>,<i>o</i>) values that appeared in <b>&lt;data&gt;</b>...<b>&lt;/data&gt;</b> must be
+            defined except (<i>v</i>,<i>o</i>) = (0,0).  Each may be defined only once.
+</p><p>
+        5.  (<i>v</i>,<i>o</i>) = (0,0) may not be defined.
+</p><p>
+</p><p>
+<a name="strls_advw"></a><b><u>5.11.3  Advice on writing strLs</u></b>
+</p><p>
+    Writing <b>.dta</b> datasets containing strLs is easy if you do not attempt to
+    link equal strLs.  Sometimes, crosslinking is easy, too, depending on how
+    your original data are stored.
+</p><p>
+    Here is pseudocode for writing strLs without crosslinking:
+</p><p>
+        write "&lt;data&gt;"
+        for (j=1; j&lt;=N; j++) {
+                for (i=1; i&lt;=K; i++) {
+                        if (variable i is strL) {
+                                if (contents of i != (ascii) "") {
+                                        write i as 4 bytes 
+                                        write j as 4 bytes
+                                }
+                                else {
+                                        write 0 as 8 bytes
+                                }
+                        }
+                        else ... /* the usual */
+                }
+        }
+        write "&lt;/data&gt;"
+</p><p>
+        write "&lt;strls&gt;"
+        for (j=1; j&lt;=N; j++) {
+                for (i=1; i&lt;=K; i++) {
+                        if (variable i is strL) {
+                                if (contents of i != (ascii) "") {
+                                        write GSO for (<i>v</i>,<i>o</i>) = (i,j)
+                                }
+                        }
+                }
+        }
+        write "&lt;/strls&gt;"
+</p><p>
+</p><p>
+<a name="strls_advr"></a><b><u>5.11.4  Advice on reading strLs</u></b>
+</p><p>
+    Here is pseudocode for reading strLs (including crosslinking):
+</p><p>
+        read "&lt;data&gt;"
+        for (j=1; j&lt;=N; j++) {
+                for (i=1; i&lt;=K; i++) {
+                        read data the usual way 
+                        in the case of strLs, just store (<i>v</i>,<i>o</i>) values
+                }
+        }
+        read "&lt;/data&gt;"
+</p><p>
+        read "&lt;strls&gt;"
+        for (j=1; j&lt;=N: j++) {
+                for (i=1; i&lt;=K; i++) {
+                        if (variable i is strL) {
+                                get <i>v</i> and <i>o</i> from data(i,j)
+                                if (v==i &amp;&amp; o==j) {
+                                        read GSO up to <i>contents</i>
+                                        read <i>len</i> bytes of <i>contents</i>
+                                        store contents in new_dataset(i,j)
+                                }
+                                else {
+                                        if (v==0 &amp;&amp; o==0) {
+                                                store (ascii) "" in new_dataset
+                                        }
+                                        else if (o&lt;j || (o==j &amp;&amp; v&lt;i) {
+                                                retrieve string new_dataset(v,o
+&gt; )
+                                                ... that you previously stored.
+                                                store string in new_dataset(i,j
+&gt; )
+                                        }
+                                        else {
+                                                abort with error due to ...
+                                                ... forward reference 
+                                        }
+                                        
+                                }
+                        }
+                }
+        }
+        read "&lt;/strls&gt;"
+</p><p>
+</p><p>
+<a name="value_labels"></a><b><u>5.12  Value labels</u></b>
+</p><p>
+    Numeric variables in Stata optionally have value labels associated with
+    them.  Value labels map numeric values to strings, such as 1 to "male"
+    and 2 to "female".  Mappings are named.  The mapping of 1 to "male" and 2
+    to "female" might be named <b>gender</b>.  The recording of the names of the
+    mappings optionally associated with variables was discussed in section
+    <a href="http://www.stata.com/help.cgi?dta_117#labelnames">5.7</a>.  Variable <b>sex</b> might be associated with value label <b>gender</b>.
+</p><p>
+    Here we discuss the recording of the value label definition itself, such
+    as <b>gender</b>.  Even if value label <b>gender</b> is used by a variable, it is not
+    required that the corresponding value-label definition be provided.
+</p><p>
+    Value labels are defined by
+</p><p>
+              <b>&lt;value_labels&gt;</b><i>individual_definitions</i><b>&lt;/value_labels&gt;</b>
+</p><p>
+    where an <i>individual_definitions</i> are each given by
+</p><p>
+              <b>&lt;lbl&gt;</b><i>def</i><b>&lt;/lbl&gt;</b>
+</p><p>
+    If no individual definitions are provided, the above becomes
+</p><p>
+              <b>&lt;value_labels&gt;&lt;/value_labels&gt;</b>
+</p><p>
+    If individual definitions are provided, the above becomes
+</p><p>
+              <b>&lt;value_labels&gt;&lt;lbl&gt;</b><i>def</i><b>&lt;/lbl&gt;</b>...<b>&lt;lbl&gt;</b><i>def</i><b>&lt;/lbl&gt;&lt;/value_labels&gt;</b>
+</p><p>
+    where <i>def</i> is
+</p><p>
+            <i>len   labelname                  padding  value_label_table</i>
+              |   |                                |  |
+              <i>llllcccccccccccccccccccccccccccccccccppp...................</i>
+                  |-------- 33 characters --------|   |--- len bytes ---|
+</p><p>
+</p><p>
+        <i>def</i>                    len   format     comment
+        -------------------------------------------------------------------
+        <i>len</i>                      4   int        length of <i>value_label_table</i>
+        <i>labname</i>                 33   char       \0 terminated
+        padding                  3
+        <i>value_label_table</i>      <i>len</i>              see next table
+        -------------------------------------------------------------------
+</p><p>
+</p><p>
+        <i>value_label_table</i>      len   format     comment
+        ----------------------------------------------------------
+        <i>n</i>                        4   int        number of entries
+        <i>txtlen</i>                   4   int        length of <i>txt[]</i>
+        <i>off</i>[]                  4*<i>n</i>   int array  <i>txt</i>[] offset table
+        <i>val</i>[]                  4*<i>n</i>   int array  sorted value table
+        <i>txt</i>[]               <b>txtlen</b>   char       text table
+        ----------------------------------------------------------
+</p><p>
+    <i>len</i>, <i>n</i>, <i>txtlen</i>, <i>off[]</i>, and <i>val[]</i> are encoded per <i>byteorder</i>.  The maximum
+    length of a single label within <i>txt</i>[] is 32,000 characters, or 32,001
+    including the terminating binary 0.  Stata ignores labels that exceed the
+    limit.
+</p><p>
+    For example, the <i>value_label_table</i> for 1&lt;-&gt;yes and 2&lt;-&gt;no, shown in MSF
+    format, would be
+</p><p>
+        byte position:  00 01 02 03   04 05 06 07   08 09 10 11   12 13 14 15
+        ---------------------------------------------------------------------
+             contents:  00 00 00 02   00 00 00 07   00 00 00 00   00 00 00 04
+              meaning:        <i>n</i> = 2    <i>txtlen</i> = 7    <i>off</i>[0] = 0    <i>off</i>[1] = 4
+        ---------------------------------------------------------------------
+</p><p>
+        byte position:  16 17 18 19   20 21 22 23   24 25 26 27 28 29 30
+        ---------------------------------------------------------------------
+             contents:  00 00 00 01   00 00 00 02    y  e  s 00  n  o 00
+              meaning:   <i>val</i>[0] = 1    <i>val</i>[1] = 2    <i>txt</i> ---&gt;
+        ---------------------------------------------------------------------
+</p><p>
+    The interpretation is that there are <i>n</i>=2 values being mapped.  The values
+    being mapped are <i>val</i>[0]=1 and <i>val</i>[1]=2.  The corresponding text for
+    <i>val</i>[0] would be at <i>off</i>[0]=0 of <i>txt</i>[] (and so be "<b>yes</b>") and for <i>val</i>[1]
+    would be at <i>off</i>[1]=4 of <i>txt</i>[] (and so be "<b>no</b>").
+</p><p>
+    Interpreting this table in C is not as daunting as it appears.  Let <b>(char</b>
+    <b>*) p</b> refer to the memory area into which <b>value_label_table</b> is read.
+    Assume your compiler uses 4-byte <b>int</b>s.  The following manifests make
+    interpreting the table easier:
+</p><p>
+        <b>#define SZInt               4</b>
+<b>        #define Off_n               0</b>
+<b>        #define Off_nxtoff          SZInt</b>
+<b>        #define Off_off             (SZInt+SZInt)</b>
+<b>        #define Off_val(n)          (SZInt+SZInt+n*SZInt)</b>
+<b>        #define Off_txt(n)          (Off_val(n) + n*SZInt)</b>
+<b>        #define Len_table(n,nxtoff) (Off_txt(n) + nxtoff)</b>
+</p><p>
+<b>        #define Ptr_n(p)            ( (int *) ( ((char *) p) + Off_n ) )</b>
+<b>        #define Ptr_nxtoff(p)       ( (int *) ( ((char *) p) + Off_nxtoff ) )</b>
+<b>        #define Ptr_off(p)          ( (int *) ( ((char *) p) + Off_off ) )</b>
+<b>        #define Ptr_val(p,n)        ( (int *) ( ((char *) p) + Off_val(n) ) )</b>
+<b>        #define Ptr_txt(p,n)        ( (char *) ( ((char *) p) + Off_txt(n) ) )</b>
+</p><p>
+    It is now the case that <b>for(i=0; i &lt; *Ptr_n(p); i++)</b>, the value
+    <b>*Ptr_val(p,i)</b> is mapped to the character string <b>Ptr_txt(p,i)</b>.
+</p><p>
+    Remember in allocating memory for <b>*p</b> that the table can be big.  The
+    limits are <i>n</i>=65,536 mapped values with each value being up to 32,001
+    characters long (including the null terminating byte).  There are <i>n</i>
+    offsets and <i>n</i> numeric values in the table, each 4 bytes long.  <i>n</i> itself
+    is 4 bytes, and <i>txtlen</i> is 4 bytes.  Such a table would be 2,097,741,832
+    bytes long ((65536 * (32001 + 4 + 4)) + 4 + 4).  No user is likely to
+    approach that limit, and in any case, after reading the 8 bytes preceding
+    the table (<i>n</i> and <i>txtlen</i>), you can calculate the remaining length as
+    2*4*<i>n</i>+<i>txtlen</i> and <b>malloc()</b> the exact amount.
+</p><p>
+    Constructing the table is more difficult.  The easiest approach is to set
+    arbitrary limits equal to or smaller than Stata's as to the maximum
+    number of entries and total text length you will allow and simply declare
+    the three pieces <b>off[]</b>, <b>val[]</b>, and <b>txt[]</b> according to those limits:
+</p><p>
+        <b>int off[MaxValueForN] ;</b>
+<b>        int val[MaxValueForN] ;</b>
+<b>        char txt[MaxValueForTxtlen] ;</b>
+</p><p>
+    Stata's internal code follows a more complicated strategy of always
+    keeping the table in compressed form and having a routine that will "add
+    one position" in the table.  This is slower but keeps memory requirements
+    to be no more than the actual size of the table.
+</p><p>
+    In any case, when adding new entries to the table, remember that <i>val</i>[]
+    must be in ascending order:  <i>val</i>[0] &lt; <i>val</i>[1] &lt; ... &lt; <i>val</i>[<i>n</i>].
+</p><p>
+    It is not required that <i>off</i>[] or <i>txt</i>[] be kept in ascending order.  We
+    previously offered the example of the table that mapped 1&lt;-&gt;yes and
+    2&lt;-&gt;no:
+</p><p>
+        byte position:  00 01 02 03   04 05 06 07   08 09 10 11   12 13 14 15
+        ---------------------------------------------------------------------
+             contents:  00 00 00 02   00 00 00 07   00 00 00 00   00 00 00 04
+              meaning:        <i>n</i> = 2    <i>txtlen</i> = 7    <i>off</i>[0] = 0    <i>off</i>[1] = 4
+        ---------------------------------------------------------------------
+</p><p>
+        byte position:  16 17 18 19   20 21 22 23   24 25 26 27 28 29 30
+        ---------------------------------------------------------------------
+             contents:  00 00 00 01   00 00 00 02    y  e  s 00  n  o 00
+              meaning:   <i>val</i>[0] = 1    <i>val</i>[1] = 2    <i>txt</i> ---&gt;
+        ---------------------------------------------------------------------
+</p><p>
+    This table could just as well be recorded as
+</p><p>
+        byte position:  00 01 02 03   04 05 06 07   08 09 10 11   12 13 14 15
+        ---------------------------------------------------------------------
+             contents:  00 00 00 02   00 00 00 07   00 00 00 03   00 00 00 00
+              meaning:        <i>n</i> = 2    <i>txtlen</i> = 7    <i>off</i>[0] = 3    <i>off</i>[1] = 0
+        ---------------------------------------------------------------------
+</p><p>
+        byte position:  16 17 18 19   20 21 22 23   24 25 26 27 28 29 30
+        ---------------------------------------------------------------------
+             contents:  00 00 00 01   00 00 00 02    n  o 00  y  e  s 00
+              meaning:   <i>val</i>[0] = 1    <i>val</i>[1] = 2    <i>txt</i> ---&gt;
+        ---------------------------------------------------------------------
+</p><p>
+    but it could not be recorded as
+</p><p>
+        byte position:  00 01 02 03   04 05 06 07   08 09 10 11   12 13 14 15
+        ---------------------------------------------------------------------
+             contents:  00 00 00 02   00 00 00 07   00 00 00 04   00 00 00 00
+              meaning:        <i>n</i> = 2    <i>txtlen</i> = 7    <i>off</i>[0] = 4    <i>off</i>[1] = 0
+        ---------------------------------------------------------------------
+</p><p>
+        byte position:  16 17 18 19   20 21 22 23   24 25 26 27 28 29 30
+        ---------------------------------------------------------------------
+             contents:  00 00 00 02   00 00 00 01    y  e  s 00  n  o 00
+              meaning:   <i>val</i>[0] = 2    <i>val</i>[1] = 1    <i>txt</i> ---&gt;
+        ---------------------------------------------------------------------
+</p><p>
+    It is not the out-of-order values of <i>off</i>[] that cause problems; it is
+    out-of-order values of <i>val</i>[].  In terms of table construction, we find it
+    easier to keep the table sorted as it grows.  This way one can use a
+    binary search routine to find the appropriate position in <i>val</i>[] quickly.
+</p><p>
+    The following routine will find the appropriate slot.  It uses the
+    manifests we previously defined, and thus it assumes the table is in
+    compressed form, but that is not important.  Changing the definitions of
+    the manifests to point to separate areas would be easy enough.
+</p><p>
+        /*
+            slot = vlfindval(char *baseptr, int val)
+</p><p>
+            Looks for value val in label at baseptr.
+                If found:
+                        returns slot number:  0, 1, 2, ...
+                If not found:
+                        returns k&lt;0 such that val would go in slot -(k+1)
+                                k== -1        would go in slot 0.
+                                k== -2        would go in slot 1.
+                                k== -3        would go in slot 2.
+        */
+</p><p>
+        int vlfindval(char *baseptr, int myval)
+        {
+                int     n ;
+                int     lb, ub, try ;
+                int     *val ;
+                char    *txt ;
+                int     *off ;
+                int     curval ;
+</p><p>
+                n   = *Ptr_n(baseptr) ;
+                val =  Ptr_val(baseptr, n) ;
+</p><p>
+                if (n==0) return(-1) ;  /* not found, insert into 0 */
+</p><p>
+                                        /* in what follows,                */
+                                        /* we know result between [lb,ub   */
+                                        /* or it is not in the table       */
+                lb = 0 ;
+                ub = n - 1 ;
+                while (1) {
+                        try = (lb + ub) / 2 ;
+                        curval = val[try] ;
+                        if (myval == curval) return(try) ;
+                        if (myval&lt;curval) {
+                                ub = try - 1 ;
+                                if (ub&lt;lb) return(-(try+1)) ;
+                                /* because want to insert before try, ergo,
+                                want to return try, and transform is -(W+1). */
+                        }
+                        else /* myval&gt;curval */ {
+                                lb = try + 1 ;
+                                if (ub&lt;lb) return(-(lb+1)) ;
+                                /* because want to insert after try, ergo,
+                                want to return try+1 and transform is -(W+1) */
+                        }
+                }
+                /*NOTREACHED*/
+        }
+</p><p>
+</p><p>
+</p></pre><!-- BEGIN FOOT -->
+</td></tr></tbody></table>
+</p><hr>
+<table bgcolor="#ffffff" border="0" cellpadding="2" cellspacing="0" width="100%">
+<tbody><tr>
+<td align="center" valign="top">
+<font face="arial,helvetica,helv,sans-serif" size="1">
+© <a href="http://www.stata.com/copyright/" class="bodylink">Copyright</a> 1996–2015 StataCorp LP
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="http://www.stata.com/terms-of-use/" class="bodylink">Terms of use</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="http://www.stata.com/privacy-policy/" class="bodylink">Privacy</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="http://www.stata.com/company/contact/" class="bodylink">Contact us</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="http://www.stata.com/news/whats-new/" class="bodylink">What's new</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="http://www.stata.com/site-index/" class="bodylink">Site index</a>
+</font>
+</td>
+		</tr>
+		</tbody></table>
+
+
+
+</body></html>
