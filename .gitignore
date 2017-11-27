@@ -1,0 +1,19 @@
+# target commented out because:
+#  1. The /target/ced2arstatareader.jar is referenced in https://github.com/ncrncornell/stata2ddigenerator README.md
+#  2. The /target files were checked in on inital commit.
+#target/
+
+# Compiled class file
+# class commented out because:
+#  2. The /target files were checked in on inital commit.
+# *.class
+
+# IDE files
+.idea
+
+# OS generated files  - common .gitignore configurations  https://gist.github.com/octocat/9257657
+.DS_Store
+.DS_Store?
+.Trashes
+ehthumbs.db
+Thumbs.db
