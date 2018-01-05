@@ -1,8 +1,8 @@
-# CED2AR STATA READER
-----------------------------
-This Project contains java classes that will allow you to read several versions of STATA data sets.
-Following versions of STATA datasets are supported by the data readers in the package. 
-#
+# CED2AR STATA Reader
+
+This project contains java classes that will allow you to read several versions of STATA data sets.
+The following versions of STATA datasets are supported by the data readers in the package. 
+
     Format        Current as of
     ---------------------------------------
       118         Stata 14 http://www.stata.com/help.cgi?dta
@@ -12,14 +12,26 @@ Following versions of STATA datasets are supported by the data readers in the pa
       114         Stata 10 & 11  http://www.stata.com/help.cgi?dta_114
       113         Stata  8 & 9  http://www.stata.com/help.cgi?dta_113
     --------------------------------------
+
+### Build
+
+1. Clone the github repository to your machine.
+2. Go to the root directory of the cloned repository.
+3. Use maven 2 to build the project. On the command line, enter the following command
+
+   ```mvn clean install```  
+
+
+### Usage 
     
-Usage ....
 
 	StataReaderFactory factory = new StataReaderFactory();
 	StataReader SR = factory.getStataReader("C:\\java\\info\\Data\\STATA\\auto13WithLabel80.dta");
 	List<String> observation = SR.getObservation(8);
 	You can call any methods defined in the interface.
 	Java doc for the classes is at /info/index.html 
+
+The [ced2arddigenerator](https://github.com/ncrncornell/ced2arddigenerator) project uses this code.
 #
 
 Code Structure
