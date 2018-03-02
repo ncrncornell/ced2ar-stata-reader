@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1186915.svg)](https://doi.org/10.5281/zenodo.1186915)
 # CED2AR STATA Reader
 
 This project contains java classes that will allow you to read several versions of STATA data sets.
