@@ -1,15 +1,15 @@
-package edu.ncrn.cornell.ced2ar.stata;
+package edu.cornell.ncrn.ced2ar;
 
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import edu.ncrn.cornell.ced2ar.stata.exceptions.InvalidDtaFormatException;
-import edu.ncrn.cornell.ced2ar.stata.impl.Dta113Reader;
-import edu.ncrn.cornell.ced2ar.stata.impl.Dta114Reader;
-import edu.ncrn.cornell.ced2ar.stata.impl.Dta115Reader;
-import edu.ncrn.cornell.ced2ar.stata.impl.Dta117Reader;
-import edu.ncrn.cornell.ced2ar.stata.impl.Dta118Reader;
+import edu.cornell.ncrn.ced2ar.exceptions.InvalidDtaFormatException;
+import edu.cornell.ncrn.ced2ar.impl.Dta113Reader;
+import edu.cornell.ncrn.ced2ar.impl.Dta114Reader;
+import edu.cornell.ncrn.ced2ar.impl.Dta115Reader;
+import edu.cornell.ncrn.ced2ar.impl.Dta117Reader;
+import edu.cornell.ncrn.ced2ar.impl.Dta118Reader;
 
 public class StataReaderFactory {
 	private static final Logger logger = Logger.getLogger(StataReaderFactory.class);
