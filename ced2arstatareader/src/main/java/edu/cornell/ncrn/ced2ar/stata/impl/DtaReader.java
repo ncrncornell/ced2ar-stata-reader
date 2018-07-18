@@ -1,4 +1,4 @@
-package edu.ncrn.cornell.ced2ar.stata.impl;
+package edu.cornell.ncrn.ced2ar.stata.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import edu.ncrn.cornell.ced2ar.stata.exceptions.InvalidDtaFormatException;
+import edu.cornell.ncrn.ced2ar.stata.exceptions.InvalidDtaFormatException;
 
 /**
 * This class is base class for stata readers. 

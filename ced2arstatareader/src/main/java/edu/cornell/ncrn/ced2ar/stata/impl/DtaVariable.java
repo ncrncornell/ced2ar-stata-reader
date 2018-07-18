@@ -1,4 +1,4 @@
-package edu.ncrn.cornell.ced2ar.stata.impl;
+package edu.cornell.ncrn.ced2ar.stata.impl;
 
 import java.util.HashMap;
 import java.util.Map;

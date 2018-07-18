@@ -1,4 +1,4 @@
-package edu.ncrn.cornell.ced2ar.stata.impl;
+package edu.cornell.ncrn.ced2ar.stata.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import edu.ncrn.cornell.ced2ar.stata.StataReader;
-import edu.ncrn.cornell.ced2ar.stata.exceptions.InvalidDtaFormatException;
+import edu.cornell.ncrn.ced2ar.stata.StataReader;
+import edu.cornell.ncrn.ced2ar.stata.exceptions.InvalidDtaFormatException;
 
 /**
 * This class reads STATA data file of format 114. 

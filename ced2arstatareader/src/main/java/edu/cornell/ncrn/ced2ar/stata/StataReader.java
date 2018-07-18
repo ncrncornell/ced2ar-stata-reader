@@ -1,10 +1,10 @@
-package edu.ncrn.cornell.ced2ar.stata;
+package edu.cornell.ncrn.ced2ar.stata;
 
 import java.io.IOException;
 import java.util.List;
 
-import edu.ncrn.cornell.ced2ar.stata.impl.DtaHeader;
-import edu.ncrn.cornell.ced2ar.stata.impl.DtaVariable;
+import edu.cornell.ncrn.ced2ar.stata.impl.DtaHeader;
+import edu.cornell.ncrn.ced2ar.stata.impl.DtaVariable;
 
 public interface StataReader {
 	
