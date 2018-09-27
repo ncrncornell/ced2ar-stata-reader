@@ -1,5 +1,12 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1186915.svg)](https://doi.org/10.5281/zenodo.1186915)
 # CED2AR STATA Reader
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1186915.svg)](https://doi.org/10.5281/zenodo.1186915)
+
+
+## Artifacts
+
+### Maven Central
+[![rdb](https://maven-badges.herokuapp.com/maven-central/edu.cornell.ncrn.ced2ar.stata/ced2arstatareader/badge.svg)](https://maven-badges.herokuapp.com/maven-central/edu.cornell.ncrn.ced2ar.stata/ced2arstatareader)
 
 This project contains java classes that will allow you to read several versions of STATA data sets.
 The following versions of STATA datasets are supported by the data readers in the package. 
@@ -20,7 +27,8 @@ The following versions of STATA datasets are supported by the data readers in th
 2. Go to the root directory of the cloned repository.
 3. Use maven 2 to build the project. On the command line, enter the following command
 
-   ```mvn clean install```  
+```mvn clean install -Dgpg.skip```  
+If publishing, omit the `-Dgpg.skip`.  
 
 
 ### Usage 

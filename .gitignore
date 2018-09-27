@@ -5,6 +5,8 @@ target/
 
 # IDE files
 .idea
+*.iml
+
 
 # OS generated files  - common .gitignore configurations  https://gist.github.com/octocat/9257657
 .DS_Store
